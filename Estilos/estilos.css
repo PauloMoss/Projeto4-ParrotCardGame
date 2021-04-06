@@ -1,0 +1,39 @@
+body {
+    background: #eef9bf;
+    font-family: 'Roboto', sans-serif;
+}
+
+.titulo {
+    color: #75B79E;
+    height: 63px;
+    width: 550px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 56px;
+    line-height: 66px;
+    margin: 50px auto;
+}
+
+.container_Cartas {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 15%;
+}
+
+.cartas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 117px;
+    height: 146px;
+    background: #A7E9AF;
+    border: 1px solid #99CEA8;
+    border-radius: 5px;
+    margin: 17px;
+}
+
+.cartas img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
