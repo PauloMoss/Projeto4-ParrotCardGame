@@ -1,8 +1,13 @@
+
 let Numero_Cartas = Number(prompt("Digite o número de cartas do jogo:"));
 
-while (Numero_Cartas < 4 || Numero_Cartas > 14 || Numero_Cartas%2 !== 0) {
-    const obs = "Obs: Deve ser escolhindo número par entre 4 e 14"
-    Numero_Cartas = prompt(`Digite o número de cartas do jogo:\n${obs}`);
+numeroDECartas ()
+function numeroDECartas () {
+
+    while (Numero_Cartas < 4 || Numero_Cartas > 14 || Numero_Cartas%2 !== 0) {
+        const obs = "Obs: Deve ser escolhindo número par entre 4 e 14"
+        Numero_Cartas = prompt(`Digite o número de cartas do jogo:\n${obs}`);
+    }
 }
 
 const lista_gifs = [];
@@ -20,40 +25,93 @@ let gif_pares = gif_1.concat(gif_2)
 
 gif_pares.sort(() => Math.random() - 0.5)
 
-for (let i = 0; i < Numero_Cartas; i++) {
-    const elemento = document.querySelector("ul");
-    elemento.innerHTML += `
-    <li class="cartas" onclick="Carta_Selecionada(this)">
-    <div class="frente face">
-    <img src="Img-GIF/front.png" alt="Parrot">
-    </div>
-    <div class="verso face">
-    ${gif_pares[i]}
-    </div>
-    </li>
-    `
-}
-function Carta_Selecionada(carta) {
-    const imagem = carta.children[0]
-    const gif = carta.children[1]
-    imagem.classList.toggle('rotacaoFrente')
-    gif.classList.toggle('rotacaoVerso')
-    gif.classList.toggle('selecionado')
-    
+DistribuicaoDECartas ()
+function DistribuicaoDECartas () {
+    for (let i = 0; i < Numero_Cartas; i++) {
+        const elemento = document.querySelector("ul");
+        elemento.innerHTML += `
+        <li class="cartas" onclick="Virar_CartaSelecionada(this)">
+        <div class="frente face">
+        <img src="Img-GIF/front.png" alt="Parrot">
+        </div>
+        <div class="verso face">
+        ${gif_pares[i]}
+        </div>
+        </li>
+        `
+    } 
 }
 
-/**
- * function Cartas_Iguais(carta) {
-    const gif = carta.children[1]
-    const gif_certo = carta.children[1].getAttribute("class")
-    const selecionado = document.querySelector("li .selecionado");
+let papagaio;
+let Gif
+let Gif_1;
+let Gif_2;
+let contadorAcertos = 0;
+let contadorJogadas = 0;
+
+function Virar_CartaSelecionada(carta) {
+    papagaio = carta.children[0]
+    Gif = carta.children[1]
+    papagaio.classList.add('rotacaoFrente')
+    Gif.classList.add('rotacaoVerso')
+    contadorJogadas++;
+
+    Verificar_Iguaildade(carta)
+}
+
+
+function Verificar_Iguaildade(carta) {
+    
+    const selecionado = document.querySelector(".selecionado");
+    
     if (selecionado !== null) {
-        gif.classList.add("teste");
+        objeto_2 = carta
+        selecionado.classList.remove("selecionado");
+        Gif_2 =  Gif.children[0].getAttribute("class")
+       
+    } else {
+        objeto_1 = carta
+        Gif_1 =  Gif.children[0].getAttribute("class")
+    }
+    Gif.classList.add('selecionado')
+    
+    if (Gif_1 === Gif_2 && selecionado !== null) {
+        Gif.classList.remove('selecionado')
+        
+        Gif_2 =  undefined
+        Gif_1 =  undefined
+
+        contadorAcertos++;
+        
+
+    } else if (Gif_1 !== Gif_2 && Gif_2 !== undefined){
+
+        setTimeout(desVirarCartas, 1000);
+        Gif.classList.remove('selecionado')
+        Gif_2 =  undefined
+        Gif_1 =  undefined
+        
+    }
+
+    if (contadorAcertos === (Numero_Cartas/2)) {
+        alert('Parabens!')
     }
 }
- * 
- * 
- * 
+
+function desVirarCartas() {
+    
+    objeto_1.children[0].classList.remove('rotacaoFrente')
+    objeto_1.children[1].classList.remove('rotacaoVerso')
+    objeto_2.children[0].classList.remove('rotacaoFrente')
+    objeto_2.children[1].classList.remove('rotacaoVerso')
+}
+
+
+/**
+ *  Gif_2 =  undefined
+    Gif_1 =  undefined
+
+    
  *   const selecionado = document.querySelector(".Prato_Principal .selecionado");
     const icone = document.querySelector(".Prato_Principal .selecionado ion-icon");
     

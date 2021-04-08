@@ -56,7 +56,7 @@ img {
 .rotacaoFrente {
     transform: rotateY(-180deg);
 }
-.teste {
+.selecionado {
     background-color: red;
 }
 
