@@ -20,20 +20,44 @@ ul {
     max-width: 800px;
 }
 .cartas {
+    position: relative;
+    width: 117px;
+    height: 146px;
+    margin: 17px;
+}
+.face {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    top: 10px;
+    left: 10px;
     width: 117px;
     height: 146px;
     background: #A7E9AF;
     border: 1px solid #99CEA8;
     border-radius: 5px;
-    margin: 17px;
+    backface-visibility: hidden;
+    transition: all .5s;
+    transform-style: preserve-3d;
 }
-.cartas img {
+img {
     width: 100px;
     height: 100px;
     object-fit: cover;
+}
+.verso {
+    transform: rotateY(180deg);
+}
+.rotacaoVerso {
+    transform: rotateY(0deg);
+}
+
+.rotacaoFrente {
+    transform: rotateY(-180deg);
+}
+.teste {
+    background-color: red;
 }
 
 @media (max-width: 614px) {
