@@ -1,117 +1,113 @@
-let Numero_Cartas = Number(prompt("Digite o número de cartas do jogo:"));
+let numeroCartas = Number(prompt("Digite o número de cartas do jogo:"));
 
-numeroDECartas ()
-function numeroDECartas () {
+numeroDeCartas ()
+function numeroDeCartas () {
 
-    while (Numero_Cartas < 4 || Numero_Cartas > 14 || Numero_Cartas%2 !== 0) {
+    while (numeroCartas < 4 || numeroCartas > 14 || numeroCartas%2 !== 0) {
         const obs = "Obs: Deve ser escolhindo número par entre 4 e 14"
-        Numero_Cartas = prompt(`Digite o número de cartas do jogo:\n${obs}`);
+        numeroCartas = prompt(`Digite o número de cartas do jogo:\n${obs}`);
     }
-    
 }
 
-const lista_gifs = [];
-lista_gifs.push("<img class='bobro' src='Img-GIF/bobrossparrot.gif' alt='Parrot'>")
-lista_gifs.push("<img class='explody' src='Img-GIF/explodyparrot.gif' alt='Parrot'>")
-lista_gifs.push("<img class='fiesta' src='Img-GIF/fiestaparrot.gif' alt='Parrot'>")
-lista_gifs.push("<img class='metal' src='Img-GIF/metalparrot.gif' alt='Parrot'>")
-lista_gifs.push("<img class='revertit' src='Img-GIF/revertitparrot.gif' alt='Parrot'>")
-lista_gifs.push("<img class='triple' src='Img-GIF/tripletsparrot.gif' alt='Parrot'>")
-lista_gifs.push("<img class='unicorn' src='Img-GIF/unicornparrot.gif' alt='Parrot'>")
+const listaGifs = [];
+listaGifs.push("<img class='bobro' src='Img-GIF/bobrossparrot.gif' alt='Parrot'>")
+listaGifs.push("<img class='explody' src='Img-GIF/explodyparrot.gif' alt='Parrot'>")
+listaGifs.push("<img class='fiesta' src='Img-GIF/fiestaparrot.gif' alt='Parrot'>")
+listaGifs.push("<img class='metal' src='Img-GIF/metalparrot.gif' alt='Parrot'>")
+listaGifs.push("<img class='revertit' src='Img-GIF/revertitparrot.gif' alt='Parrot'>")
+listaGifs.push("<img class='triple' src='Img-GIF/tripletsparrot.gif' alt='Parrot'>")
+listaGifs.push("<img class='unicorn' src='Img-GIF/unicornparrot.gif' alt='Parrot'>")
 
-lista_gifs.sort(() => Math.random() - 0.5) // Embaralhar os tipos de Gifs usados no jogo
-const gif_1 = lista_gifs.slice(0,Numero_Cartas/2)
-const gif_2 = lista_gifs.slice(0,Numero_Cartas/2)
-let gif_pares = gif_1.concat(gif_2)
-gif_pares.sort(() => Math.random() - 0.5) // Embaralhar os Gifs na tela
+listaGifs.sort(() => Math.random() - 0.5) // Embaralhar os tipos de Gifs usados no jogo
+const metadeDosPares = listaGifs.slice(0,numeroCartas/2)
+const outraMetade = listaGifs.slice(0,numeroCartas/2)
+let paresDeGifs = metadeDosPares.concat(outraMetade)
+paresDeGifs.sort(() => Math.random() - 0.5) // Embaralhar os Gifs na lista para serem distribuidos
 
-DistribuicaoDECartas ()
+distribuicaoDeCartas ()
 
-function DistribuicaoDECartas () {
-    for (let i = 0; i < Numero_Cartas; i++) {
+function distribuicaoDeCartas () {
+    for (let i = 0; i < numeroCartas; i++) {
         const elemento = document.querySelector("ul");
         elemento.innerHTML += `
-        <li class="cartas" onclick="Virar_CartaSelecionada(this)">
+        <li class="cartas" onclick="virarCartaSelecionada(this)">
         <div class="frente face">
         <img src="Img-GIF/front.png" alt="Parrot">
         </div>
         <div class="verso face">
-        ${gif_pares[i]}
+        ${paresDeGifs[i]}
         </div>
-        </li>
-        `
+        </li>`
     } 
 }
 
-let papagaio;
-let Gif
-let objeto_1;
-let objeto_2;
+let imgFrente;
+let gifVerso;
+let cartaSelecionada_1;
+let cartaSelecionada_2;
 let Gif_1;
 let Gif_2;
 let contadorAcertos = 0;
 let contadorJogadas = 0;
 let tempoClick = Date.now();
-let delayClick = 1000; // Ao clicar em 2 cartas consecutivas, a próxima só poderá ser clicada após 1s.
 
-function Virar_CartaSelecionada(carta) {
-    
+function virarCartaSelecionada(carta) {
+
+    const delayClick = 1000; // Ao clicar em 2 cartas consecutivas, a próxima só poderá ser clicada após 1s.
     if (Date.now() - tempoClick > delayClick && Gif_2 !== undefined) {
         virarCarta(carta)
-        Verificar_Iguaildade(carta)
+        verificarIguaildade(carta)
     } else if (Gif_2 === undefined) {
         virarCarta(carta)
-        Verificar_Iguaildade(carta)
+        verificarIguaildade(carta)
     }
 }
 
 function virarCarta(carta) {
-    papagaio = carta.children[0]
-    Gif = carta.children[1]
-    papagaio.classList.add('rotacaoFrente')
-    Gif.classList.add('rotacaoVerso')
+    imgFrente = carta.children[0]
+    gifVerso = carta.children[1]
+    imgFrente.classList.add('rotacaoFrente')
+    gifVerso.classList.add('rotacaoVerso')
     tempoClick = Date.now();
     contadorJogadas++;
 }
 
-function Verificar_Iguaildade(carta) {
+function verificarIguaildade(carta) {
     
     const selecionado = document.querySelector(".selecionado");
-    
     if (selecionado !== null) {
-        objeto_2 = carta
+        cartaSelecionada_2 = carta
         selecionado.classList.remove("selecionado");
-        Gif_2 =  Gif.children[0].getAttribute("class")
+        Gif_2 =  gifVerso.children[0].getAttribute("class")
        
     } else {
-        objeto_1 = carta
-        Gif_1 =  Gif.children[0].getAttribute("class")
-        objeto_1.removeAttribute("onclick");
+        cartaSelecionada_1 = carta
+        Gif_1 =  gifVerso.children[0].getAttribute("class")
+        cartaSelecionada_1.removeAttribute("onclick");
     }
-    Gif.classList.add('selecionado')
+    gifVerso.classList.add('selecionado')
     
     if (Gif_1 === Gif_2) {
-        Gif.classList.remove('selecionado')
-        objeto_1.removeAttribute("onclick");
-        objeto_2.removeAttribute("onclick");
+        gifVerso.classList.remove('selecionado')
+        cartaSelecionada_1.removeAttribute("onclick");
+        cartaSelecionada_2.removeAttribute("onclick");
         contadorAcertos++;
         setTimeout(atualizarAtributos, 1000);
         
     } else if (Gif_1 !== Gif_2 && Gif_2 !== undefined){
 
         setTimeout(desVirarCartas, 1000);
-        Gif.classList.remove('selecionado')
-        objeto_1.setAttribute("onclick",'Virar_CartaSelecionada(this)');
-       
+        gifVerso.classList.remove('selecionado')
+        cartaSelecionada_1.setAttribute("onclick",'virarCartaSelecionada(this)');
     }
 }
 
 function desVirarCartas() {
     
-    objeto_1.children[0].classList.remove('rotacaoFrente')
-    objeto_1.children[1].classList.remove('rotacaoVerso')
-    objeto_2.children[0].classList.remove('rotacaoFrente')
-    objeto_2.children[1].classList.remove('rotacaoVerso')
+    cartaSelecionada_1.children[0].classList.remove('rotacaoFrente')
+    cartaSelecionada_1.children[1].classList.remove('rotacaoVerso')
+    cartaSelecionada_2.children[0].classList.remove('rotacaoFrente')
+    cartaSelecionada_2.children[1].classList.remove('rotacaoVerso')
     atualizarAtributos ()
 }
 function atualizarAtributos () {
@@ -130,24 +126,23 @@ function Tempo() {
 function contagem() {
     contadorTempo+=1;
     atualizarCont();
-    if (contadorAcertos === (Numero_Cartas/2)) {
+    if (contadorAcertos === (numeroCartas/2)) {
         clearInterval(idInterval);
-        setTimeout(alert, 50, `Parabens! Tempo: ${contadorTempo}`);
-        setTimeout(Novo_Jogo, 50)
+        setTimeout(alert, 100, `Você ganhou em ${contadorJogadas} jogadas!\nTempo decorrido: ${contadorTempo} segundos`);
+        setTimeout(Novo_Jogo, 100)
     } 
 }  
 function atualizarCont() {
     const elemento = document.querySelector(".contador");
-    elemento.innerHTML = contadorTempo;
+    elemento.innerHTML = `Tempo de duração:<br>  ${contadorTempo} Segundos`;
 }
 
 function Novo_Jogo() {
 
     let novoJogo = prompt(`Gostaria de jogar novamente?\nObs: digite: S ou N`);
-    
     if (novoJogo === 'S' || novoJogo === 's') {
         location.reload();
     } else if (novoJogo === 'N' || novoJogo === 'n'){
-    alert('Obrigado por Jogar')
+    setTimeout(alert, 50, 'Obrigado por Jogar')
     } 
 }

@@ -58,8 +58,16 @@ img {
 }
 .contador {
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     top: 40px;
     right: 40px;
+    height: 70px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
     color: #000;
 }
 
@@ -72,11 +80,22 @@ img {
         line-height: 42px;
         text-align: center;
         padding: 5px 15px;
-        margin-bottom: 10px;
+        margin: 70px auto 10px auto;
     }
     ul {
         flex-direction: column;
         align-items: center;
         width: 100%;
+    }
+    .contador {
+        position: fixed;
+        top: 0px;
+        right: 0px;
+        z-index: 2;
+        width: 100%;
+        padding-top: 10px;
+        border-bottom: 1px solid #99CEA8;
+        background: #eef9bf;
+        color: #000;
     }
 }
