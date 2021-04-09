@@ -59,6 +59,14 @@ img {
 .selecionado {
     background-color: red;
 }
+.contador {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+}
 
 @media (max-width: 614px) {
 

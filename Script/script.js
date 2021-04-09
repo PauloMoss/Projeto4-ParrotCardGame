@@ -8,6 +8,7 @@ function numeroDECartas () {
         const obs = "Obs: Deve ser escolhindo número par entre 4 e 14"
         Numero_Cartas = prompt(`Digite o número de cartas do jogo:\n${obs}`);
     }
+    
 }
 
 const lista_gifs = [];
@@ -93,9 +94,7 @@ function Verificar_Iguaildade(carta) {
         
     }
 
-    if (contadorAcertos === (Numero_Cartas/2)) {
-        alert('Parabens!')
-    }
+    
 }
 
 function desVirarCartas() {
@@ -106,6 +105,45 @@ function desVirarCartas() {
     objeto_2.children[1].classList.remove('rotacaoVerso')
 }
 
+let contadorTempo = 1;
+let idInterval;
+Tempo()
+function Tempo() {
+    idInterval = setInterval(contagem, 1000);
+    atualizarCont()
+}
+
+function contagem() {
+    contadorTempo+=1;
+    atualizarCont();
+
+    if (contadorAcertos === (Numero_Cartas/2)) {
+        clearInterval(idInterval);
+        setTimeout(alert, 50, `Parabens! Tempo: ${contadorTempo}`);
+        setTimeout(Novo_Jogo, 50)
+        
+    } 
+}  
+
+function atualizarCont() {
+    const elemento = document.querySelector(".contador");
+    elemento.innerHTML = contadorTempo;
+}
+
+function Novo_Jogo() {
+
+    let novoJogo = prompt(`Gostaria de jogar novamente?\nObs: digite: S ou N`);
+    if (novoJogo === 'S' || novoJogo === 's') {
+        location.reload();
+    } else if (novoJogo === 'N' || novoJogo === 'n'){
+    alert('Obrigado por Jogar')
+    } else {
+        /**while (novoJogo !== 'S' || novoJogo !== 'N') {
+            novoJogo = prompt(`Gostaria de jogar novamente?\nObs: digite: S ou N`);
+            console.log(novoJogo)
+        }**/
+    }
+}
 
 /**
  *  Gif_2 =  undefined
@@ -132,4 +170,3 @@ function desVirarCartas() {
 }
  * 
 }**/
-
